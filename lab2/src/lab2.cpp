@@ -15,10 +15,11 @@ class student{
 	string usn;
 	string name;
 	string branch;
-	int semester
-	string buffer;
+	int semester;
+
 
 public:
+	string buffer;
 	void readfromconsole() {
 		cout<<"enter the usn"<<endl;
 		cin>>usn;
@@ -68,7 +69,7 @@ public:
 	void unpack()
 	{
 		string sem;
-		int ch=1,i=0;
+		int i=0;
 		usn.erase();
 		while(buffer[i]!='|')
 			usn+=buffer[i++];
@@ -89,7 +90,7 @@ public:
 	}
 	void pack()
 	{
-		string buffer;
+		//string buffer;
 		string sem1;
 		stringstream out;
 		out<<semester;
@@ -98,22 +99,49 @@ public:
 		int j,len;
 		temp=usn+'|'+name+'|'+branch+'|'+sem1;
 		len=temp.size();
-		buffer=temp;
+
 		for(j=len+1;j<100;j++)
 		{
 			temp+='$';
+		}
+		buffer=temp;
+	}
+	void modify(string key)
+	{
+		int choice;
+		cout<<"want to modify?\n 1.usn 2.name 3.branch 4.semester\n";
+		cout<<"enter your choice\n";
+		cin>>choice;
+		switch(choice)
+		{
+		case 1:cout<<"usn";
+				cin>>usn;
+				break;
+		case 2:cout<<"name";
+				cin>>name;
+				break;
+		case 3:cout<<"branch";
+				cin>>branch;
+				break;
+		case 4:cout<<"semester";
+				cin>>semester;
+				break;
+		default:cout<<"wrong choice";
+		buffer.erase();
+		pack();
+		write();
 		}
 	}
 
 };
 
 int main() {
-	int choice,choice,len,i;
+	int choice;
 	student s;
 	string key;
 	while(1)
 	{
-		cout<<"1.insert"<<endl<<"2.search"<<endl<<" 3.delete"<<endl<<" 4.modify"<<endl;
+		cout<<"1.insert"<<endl<<"2.search"<<endl<<"3.modify"<<endl;
 		cout<<"enter choice";
 		cin>>choice;
 		switch(choice)
@@ -121,11 +149,16 @@ int main() {
 		case 1:s.readfromconsole();
 		       s.showstudent();
 		       s.pack();
+		       s.write();
 		       break;
-		       .open("2a.txt",ios::out|ios::app);
-		       		file<<buffer;
-		       		file.close();
-		       	}
+		case 2:cout<<"enter key";
+				cin>>key;
+				s.search(key);
+				break;
+		case 3:cout<<"enter key";
+			cin>>key;
+			s.modify(key);
+			break;
 		}
 	}
 	return 0;
